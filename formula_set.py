@@ -92,8 +92,8 @@ def is_double(s: str)->bool:
     try:
         float(s)
     except ValueError:
-        return 0
-    return 1
+        return False
+    return True
         
     
 
