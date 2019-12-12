@@ -8,11 +8,8 @@ class Formula_set:
     formula = []     # a list of class Formula
     
     def __init__(self, *formulas: str):
-        variable = set()
         for f in formulas:
-            self.formula.append(Formula(f))            
-            variable = variable.union(self.formula[-1].arg_required)
-        self.variable = dict.fromkeys(variable, None)  
+            self.add_formula(f)
         
     def is_solvable(self, formula)->bool:
         unknown_var = 0
@@ -61,6 +58,38 @@ class Formula_set:
         for f in self.formula:
             print(f.content, end=' ')
             print(self.is_solvable(f))
+    
+    #  User Interface
+    #  1  add formula in a list to this formula set 
+    def add_formula(self, formulas: list, need_solve=True):
+        for f in formulas:
+            if f not in self.formula:
+                self.formula.append(Formula(f))
+                for var in self.formula[-1].arg_required:
+                    self.variable.setdefault(var)
+        if need_solve:
+            self.solve()
+    #  2  add value to a corresponded variable (list of tuple)
+    def add_variable(self, variables: list, need_solve=True):
+        for var in variables:
+            self.variable.setdefault(var[0], var[1])
+        if need_solve:
+            self.solve
+    #  3  clear all values in variable
+    def clear_variable(self):
+        self.variable = self.variable.fromkeys(self.variable, None)
+    #  4  clear all formulas in formulas
+    def clear_formulas(self):
+        self.formula = list()
+    #  5  see the corresponded value of a variable 
+    #     return None if it's still undefined or not existed
+    def see(self, var: str)->float:
+        try:
+            return self.variable[var]
+        except KeyError:
+            return None
+        
+        
 
 # a class with content(formula), arg_required
 class Formula:
@@ -79,22 +108,19 @@ class Formula:
 
         
 def main():
-    formula_set = Formula_set("b - 26 = 4 * 3 + 6 * 2", "c = b + 2", "a = c + b", "d = 3")
-    formula_set.solve()
-    print(formula_set.variable['a'])
-    print(formula_set.variable['b'])
-    print(formula_set.variable['c'])
-    print(formula_set.variable['d'])
+    formula_set = Formula_set()
+    formula_set.add_formula(["b - 26 = 4 * 3 + 6 * 2", "c = b + 2", "a = c + b", "d = 3"])
+    print(formula_set.see('b'))
+
  
 ###############################################################
 # helper function   
 def is_double(s: str)->bool:
     try:
         float(s)
+        return True
     except ValueError:
-        return False
-    return True
-        
+        return False      
     
 
 if __name__ == "__main__":
