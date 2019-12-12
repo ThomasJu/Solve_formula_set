@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 # update is_solvable
 from sympy.solvers import solve
 from sympy import Symbol
+import readline
 SYMBOL = {"+", "-", "*", "\\", "=", "**", "^", "(", ")"}
 
 class Formula_set:
@@ -108,10 +110,11 @@ class Formula:
 
         
 def main():
-    formula_set = Formula_set()
-    formula_set.add_formula(["b - 26 = 4 * 3 + 6 * 2", "c = b + 2", "a = c + b", "d = 3"])
-    print(formula_set.see('b'))
-
+    while True:
+        inputline = input("formula set> ")
+        if inputline == "quit()":
+            break
+        #  command line waiting to implement
  
 ###############################################################
 # helper function   
