@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # update is_solvable
+# upgrade TODO
+# update README
 from sympy.solvers import solve
 from sympy import Symbol
 import readline
@@ -108,16 +110,146 @@ class Formula:
         self.modify_content = self.content.replace('=', '- (')
         self.modify_content += ' )'
 
-        
+# command line usage
+#   0   quit()         leave the command line prompt
+#   1   init [name]    initializa a new formula set
+#   2   delete [name]   delete a formula set
+#   3   list           list all formula set existed
+#   4   set [name] [op] [arg1] , [arg2] ....
+#            op:  +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
+#                 +v  (add value)     ex  set A +v a 2 , b 4 , c 7
+#                 see (see variable)  ex set A see a , b , c
+#                 see_all (see all variable)  ex set A see_all
+#                 reset (reset all)   ex set A reset
+#                 resetf (reset all formulas)  ex set A resetf
+#                 resetv (reset all variables)  ex set A resetv
+#                 delf (delete formulas)  ex set A delf  1 , 3 , 4  # TODO:  Haven't implemented shoudl wait for class implementation
+#                 delv (delete values) ex  set A delv 1 , 5 , 7  # TODO:  Haven't implemented shoudl wait for class implementation
 def main():
+    formula_sets = dict()
+    setoperation("set A reset 1 = 1 , 2 = 4 , x ** 2 + x * 2 = a", Formula_set())
     while True:
         inputline = input("formula set> ")
-        if inputline == "quit()":
+        command = inputline.split()[0]
+        if command == "quit()":
             break
-        #  command line waiting to implement
- 
+        #  1 
+        if command == "init":
+            name = inputline.split()[1]
+            if name in formula_sets:
+                print("This name has already existed, please delete before reinitialize")
+            else:
+                formula_sets[name] = Formula_set()
+                print(f"Formula set {name} initialized")  
+        #  2  
+        if command == "delete":
+            name = inputline.split()[1]
+            if name in formula_sets:
+                formula_sets.pop(name)
+                print(f"Formula set {name} deleted")
+            else:
+                print("This name doesn't exist in formula sets")
+        #  3
+        if command == "list":
+            print("Formula set existed: ", end="")
+            for key in formula_sets:
+                print(f"{key}", end=" ")
+            print("")
+        #  4 
+        if command == "set":
+            name = inputline.split()[1]
+            if name not in formula_sets:
+                print(f"Formula set {name} not existed")
+            else:
+                formula_sets[name] = setoperation(inputline, formula_sets[name])
+        #  5
+        if command == "help":
+            print_help()
+        print("=====================================")     
 ###############################################################
-# helper function   
+# command line usage
+#   0   quit()         leave the command line prompt
+#   1   init [name]    initializa a new formula set
+#   2   delete [name]   delete a formula set
+#   3   list           list all formula set existed
+#   4   set [name] [op] [arg1] , [arg2] ....
+#            op:  +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
+#                 +v  (add value)     ex  set A +v a 2 , b 4 , c 7
+#                 see (see variable)  ex set A see a , b , c
+#                 see_all (see all variable)  ex set A see_all
+#                 reset (reset all)   ex set A reset
+#                 resetf (reset all formulas)  ex set A resetf
+#                 resetv (reset all variables)  ex set A resetv
+#                 delf (delete formulas)  ex set A delf  1 , 3 , 4  # TODO:  Haven't implemented shoudl wait for class implementation
+#                 delv (delete values) ex  set A delv 1 , 5 , 7  # TODO:  Haven't implemented shoudl wait for class implementation
+
+# helper function
+#  TODO: error handling   
+def setoperation(line: str, fs: Formula_set)->Formula_set:
+    op = line.split()[2]
+    ##############################
+    # argument processing
+    argv = []
+    s = ""
+    for arg in line.split()[3:]:
+        if arg == ',':
+            argv.append(s)
+            s = ""
+        else:
+            s += " " + arg
+    argv.append(s)
+    ###############################       
+    if op == "+f":
+        fs.add_formula(argv)
+    elif op == "+v":
+        variabletuple = []
+        for arg in argv:
+            variabletuple.append((arg.split()[0], arg.split()[1]))
+        fs.add_variable(variabletuple)
+    elif op == "see":
+        for arg in argv:
+            print(f"{arg}: {fs.see(arg)}")
+    elif op == "see_all":
+        for key, value in fs.variable.items():
+            print(f"{key}: {value}")
+    elif op == "reset":
+        fs.clear_formulas()
+        fs.clear_variable()
+    elif op == "resetf":
+        fs.clear_formulas()
+    elif op == "resetv":
+        fs.clear_variable()
+    elif op == "delf":
+        pass
+    elif op == "delv":
+        pass  
+    else:
+        print("Invalid op, use help to see all available op")
+    return fs
+
+
+def print_help():
+    print(
+''' 
+=====================================
+command line usage
+0   quit()         leave the command line prompt
+1   init [name]    initializa a new formula set
+2   delete [name]   delete a formula set
+3   list           list all formula set existed
+4   set [name] [op] [arg1] , [arg2] ....
+        op: +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
+            +v  (add value)     ex  set A +v a 2 , b 4 , c 7
+            see (see variable)  ex set A see a , b , c
+            see_all (see all variable)  ex set A see_all
+            reset (reset all)   ex set A reset
+            resetf (reset all formulas)  ex set A resetf
+            resetv (reset all variables)  ex set A resetv
+            delf (delete formulas)  ex set A delf  1 , 3 , 4  *** Waiting Implementation
+            delv (delete values) ex  set A delv 1 , 5 , 7  *** Waiting Implemenation
+            '''
+    )
+
 def is_double(s: str)->bool:
     try:
         float(s)
