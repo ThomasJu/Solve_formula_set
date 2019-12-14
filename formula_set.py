@@ -4,7 +4,6 @@
 # update README
 # make see all formulas
 # make contradict---
-# bugs in +v
 from sympy.solvers import solve
 from sympy import Symbol
 import readline
@@ -77,11 +76,12 @@ class Formula_set:
         if need_solve:
             self.solve()
     #  2  add value to a corresponded variable (list of tuple)
-    def add_variable(self, variables: list, need_solve=True):
+    def add_variable(self, variables: list, need_solve=True):        
         for var in variables:
-            self.variable.setdefault(var[0], var[1])
+            self.variable[var[0]] = var[1]
+            self.update_variable(var[0])
         if need_solve:
-            self.solve
+            self.solve()
     #  3  clear all values in variable
     def clear_variable(self):
         self.variable = self.variable.fromkeys(self.variable, None)
@@ -95,8 +95,6 @@ class Formula_set:
             return self.variable[var]
         except KeyError:
             return None
-        
-        
 
 # a class with content(formula), arg_required
 class Formula:
@@ -130,7 +128,6 @@ class Formula:
 #                 delv (delete values) ex  set A delv 1 , 5 , 7  # TODO:  Haven't implemented shoudl wait for class implementation
 def main():
     formula_sets = dict()
-    setoperation("set A reset 1 = 1 , 2 = 4 , x ** 2 + x * 2 = a", Formula_set())
     while True:
         inputline = input("formula set> ")
         command = inputline.split()[0]
@@ -194,15 +191,18 @@ def setoperation(line: str, fs: Formula_set)->Formula_set:
     op = line.split()[2]
     ##############################
     # argument processing
-    argv = []
-    s = ""
-    for arg in line.split()[3:]:
-        if arg == ',':
-            argv.append(s)
-            s = ""
-        else:
-            s += " " + arg
-    argv.append(s)
+    try:
+        argv = []
+        s = line.split()[3]
+        for arg in line.split()[4:]:
+            if arg == ',':
+                argv.append(s)
+                s = ""
+            else:
+                s += " " + arg
+        argv.append(s)
+    except IndexError:
+        pass
     ###############################       
     if op == "+f":
         fs.add_formula(argv)
