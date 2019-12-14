@@ -2,6 +2,9 @@
 # update is_solvable
 # upgrade TODO
 # update README
+# make see all formulas
+# make contradict---
+# bugs in +v
 from sympy.solvers import solve
 from sympy import Symbol
 import readline
@@ -134,7 +137,7 @@ def main():
         if command == "quit()":
             break
         #  1 
-        if command == "init":
+        elif command == "init":
             name = inputline.split()[1]
             if name in formula_sets:
                 print("This name has already existed, please delete before reinitialize")
@@ -142,7 +145,7 @@ def main():
                 formula_sets[name] = Formula_set()
                 print(f"Formula set {name} initialized")  
         #  2  
-        if command == "delete":
+        elif command == "delete":
             name = inputline.split()[1]
             if name in formula_sets:
                 formula_sets.pop(name)
@@ -150,21 +153,23 @@ def main():
             else:
                 print("This name doesn't exist in formula sets")
         #  3
-        if command == "list":
+        elif command == "list":
             print("Formula set existed: ", end="")
             for key in formula_sets:
                 print(f"{key}", end=" ")
             print("")
         #  4 
-        if command == "set":
+        elif command == "set":
             name = inputline.split()[1]
             if name not in formula_sets:
                 print(f"Formula set {name} not existed")
             else:
                 formula_sets[name] = setoperation(inputline, formula_sets[name])
         #  5
-        if command == "help":
+        elif command == "help":
             print_help()
+        else:
+            print("Invalid command, use command help to see command line usage")
         print("=====================================")     
 ###############################################################
 # command line usage
@@ -230,8 +235,7 @@ def setoperation(line: str, fs: Formula_set)->Formula_set:
 
 def print_help():
     print(
-''' 
-=====================================
+'''=====================================
 command line usage
 0   quit()         leave the command line prompt
 1   init [name]    initializa a new formula set
