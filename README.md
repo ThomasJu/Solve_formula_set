@@ -6,7 +6,7 @@
   pip3 install -r requirements.txt
   python3 formula_set.py
   ```
-### Introduction to use this package in command line
+### Command line usage
 command line usage
    -   quit()         leave the command line prompt
    -   init [name]    initializa a new formula set
