@@ -119,7 +119,9 @@ class Formula:
 #            op:  +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
 #                 +v  (add value)     ex  set A +v a 2 , b 4 , c 7
 #                 see (see variable)  ex set A see a , b , c
-#                 see_all (see all variable)  ex set A see_all
+#                 see_v (see all variable)  ex set A see_v
+#                 see_f (see all formulas)  ex set A see_f
+#                 see_all (see all variable and formulas)  ex set A see_all
 #                 reset (reset all)   ex set A reset
 #                 resetf (reset all formulas)  ex set A resetf
 #                 resetv (reset all variables)  ex set A resetv
@@ -168,22 +170,6 @@ def main():
             print("Invalid command, use command help to see command line usage")
         print("=====================================")     
 ###############################################################
-# command line usage
-#   0   quit()         leave the command line prompt
-#   1   init [name]    initializa a new formula set
-#   2   delete [name]   delete a formula set
-#   3   list           list all formula set existed
-#   4   set [name] [op] [arg1] , [arg2] ....
-#            op:  +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
-#                 +v  (add value)     ex  set A +v a 2 , b 4 , c 7
-#                 see (see variable)  ex set A see a , b , c
-#                 see_all (see all variable)  ex set A see_all
-#                 reset (reset all)   ex set A reset
-#                 resetf (reset all formulas)  ex set A resetf
-#                 resetv (reset all variables)  ex set A resetv
-#                 delf (delete formulas)  ex set A delf  1 , 3 , 4  # TODO:  Haven't implemented shoudl wait for class implementation
-#                 delv (delete values) ex  set A delv 1 , 5 , 7  # TODO:  Haven't implemented shoudl wait for class implementation
-
 # helper function
 #  TODO: error handling   
 def setoperation(line: str, fs: Formula_set)->Formula_set:
@@ -213,9 +199,21 @@ def setoperation(line: str, fs: Formula_set)->Formula_set:
     elif op == "see":
         for arg in argv:
             print(f"{arg}: {fs.see(arg)}")
-    elif op == "see_all":
+    elif op == "see_v":
+        print("Variables:")
         for key, value in fs.variable.items():
-            print(f"{key}: {value}")
+            print(f"\t{key}: {value}")
+    elif op == "see_f":
+        print("Fromulas:")
+        for f in fs.formula:
+            print(f"\t{f.content}")
+    elif op == "see_all":
+        print("Fromulas:")
+        for f in fs.formula:
+            print(f"\t{f.content}")
+        print("Variables:")
+        for key, value in fs.variable.items():
+            print(f"\t{key}: {value}")    
     elif op == "reset":
         fs.clear_formulas()
         fs.clear_variable()
@@ -244,7 +242,9 @@ command line usage
         op: +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
             +v  (add value)     ex  set A +v a 2 , b 4 , c 7
             see (see variable)  ex set A see a , b , c
-            see_all (see all variable)  ex set A see_all
+            see_v (see all variable)  ex set A see_v
+            see_f (see all formulas)  ex set A see_f
+            see_all (see all variable and formulas)  ex set A see_all
             reset (reset all)   ex set A reset
             resetf (reset all formulas)  ex set A resetf
             resetv (reset all variables)  ex set A resetv
