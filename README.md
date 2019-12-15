@@ -9,7 +9,7 @@
 ### Command line usage
 command line usage
    -   quit()            leave the command line prompt
-   -   init [name]       initializa a new formula set
+   -   init [name]       initialize a new formula set
    -   delete [name]     delete a formula set
    -   list              list all formula set existed
    -   set [name] [op] [arg1] , [arg2] ....
