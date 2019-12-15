@@ -8,11 +8,11 @@
   ```
 ### Introduction to use this package in command line
 command line usage
-   0   quit()         leave the command line prompt
-   1   init [name]    initializa a new formula set
-   2   delete [name]   delete a formula set
-   3   list           list all formula set existed
-   4   set [name] [op] [arg1] , [arg2] ....
+   -   quit()         leave the command line prompt
+   -   init [name]    initializa a new formula set
+   -   delete [name]   delete a formula set
+   -   list           list all formula set existed
+   -   set [name] [op] [arg1] , [arg2] ....
             op:  +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
                  +v  (add value)     ex  set A +v a 2 , b 4 , c 7
                  see (see variable)  ex set A see a , b , c
