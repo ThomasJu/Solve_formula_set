@@ -28,3 +28,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delv (delete values) // waiting for implementation<br /> 
    -   help<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find the instruction of this command line
+
+## Contact
+   If you want to commit change, please contact yuanping@umich.edu
