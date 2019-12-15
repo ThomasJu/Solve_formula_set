@@ -8,17 +8,21 @@
   ```
 ### Command line usage
 command line usage
-   -   quit()            &nbsp;leave the command line prompt
-   -   init [name]       initialize a new formula set
-   -   delete [name]     delete a formula set
-   -   list              list all formula set existed
-   -   set [name] [op] [arg1] , [arg2] ....
-            op:  +f  (add formula)   ex  set A +f 1 = 3 , 2 = 4 * a
-                 +v  (add value)     ex  set A +v a 2 , b 4 , c 7
-                 see (see variable)  ex set A see a , b , c
-                 see_all (see all variable)  ex set A see_all
-                 reset (reset all)   ex set A reset
-                 resetf (reset all formulas)  ex set A resetf
-                 resetv (reset all variables)  ex set A resetv
-                 delf (delete formulas)  ex set A delf  1 , 3 , 4   // waiting for implementation
-                 delv (delete values) ex  set A delv 1 , 5 , 7    // waiting for implementation
+   -   quit() <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leave the command line prompt
+   -   init [name]       
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialize a new formula set
+   -   delete [name]     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete a formula set
+   -   list <br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list all formula set existed
+   -   set [name] [op] [arg1] , [arg2] .... <br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;op:  +f  (add formula)<br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+v  (add value) <br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see (see variable) <br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see_all (see all variable)<br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reset (reset all)<br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resetf (reset all formulas)<br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resetv (reset all variables)<br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delf (delete formulas) // waiting for implementation<br /> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delv (delete values) // waiting for implementation<br /> 
