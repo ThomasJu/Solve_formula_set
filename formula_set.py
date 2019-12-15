@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 # update is_solvable
-# upgrade TODO
-# make see all formulas
 # make contradict---
 from sympy.solvers import solve
 from sympy import Symbol
@@ -43,27 +41,6 @@ class Formula_set:
             except KeyError:
                 pass
     
-    def display(self):
-        print("Variable:")
-        for var in self.variable:
-            print(var, end=' ')
-        print("")
-        
-        print("Formula")
-        for f in self.formula:
-            print(f.content)
-    
-    def debug_display(self):
-        print("Variable:")
-        for var in self.variable:
-            print(var, end=' ')
-        print("")
-        
-        print("Formula")
-        for f in self.formula:
-            print(f.content, end=' ')
-            print(self.is_solvable(f))
-    
     #  User Interface
     #  1  add formula in a list to this formula set 
     def add_formula(self, formulas: list, need_solve=True):
@@ -94,6 +71,14 @@ class Formula_set:
             return self.variable[var]
         except KeyError:
             return None
+    #  6 delete formulas by a list of index  may return indexerror
+    def delf(self, delindex: list):
+        for index in delindex:
+            del self.formula[index]
+    #  7 delete variables by a list of variables   may return keyerror
+    def delv(self, delvar: list):
+        for var in delvar:
+            del self.variable[var]
 
 # a class with content(formula), arg_required
 class Formula:
@@ -107,8 +92,7 @@ class Formula:
         for element in content.split():
             if element not in SYMBOL and not is_double(element):
                 self.arg_required.add(element)
-        self.modify_content = self.content.replace('=', '- (')
-        self.modify_content += ' )'
+        self.modify_content = self.content.replace('=', '- (') + ' )'
 
 # command line usage
 #   0   quit()         leave the command line prompt
@@ -191,11 +175,13 @@ def setoperation(line: str, fs: Formula_set)->Formula_set:
     ###############################       
     if op == "+f":
         fs.add_formula(argv)
+        print("Formula successfully added")
     elif op == "+v":
         variabletuple = []
         for arg in argv:
             variabletuple.append((arg.split()[0], arg.split()[1]))
         fs.add_variable(variabletuple)
+        print("Variables successfully added")
     elif op == "see":
         for arg in argv:
             print(f"{arg}: {fs.see(arg)}")
@@ -217,14 +203,35 @@ def setoperation(line: str, fs: Formula_set)->Formula_set:
     elif op == "reset":
         fs.clear_formulas()
         fs.clear_variable()
+        print("Both Formulas and variables have been successfully reset")
     elif op == "resetf":
         fs.clear_formulas()
+        print("Formulas have been successfully reset")
     elif op == "resetv":
         fs.clear_variable()
+        print("Variables have been successfully reset")
     elif op == "delf":
-        pass
+        print("Fromulas:")
+        for f in fs.formula:
+            print(f"\t{f.content}")
+        print("Please enter the indexes you want to delete (separated by space)")
+        delindex = input(">")
+        try:
+            fs.delf(delindex.split())
+            print("Formulas deleted successfully")
+        except IndexError:
+            print("Invalid input, please try again")
     elif op == "delv":
-        pass  
+        print("Variables:")
+        for key, value in fs.variable.items():
+            print(f"\t{key}: {value}")
+        print("Please enter the variables you want to delete (separated by space)")
+        delindex = input(">")
+        try:
+            fs.delv(delindex.split())
+            print("Variables deleted successfully")
+        except KeyError:
+            print("Invalid input, please try again")
     else:
         print("Invalid op, use help to see all available op")
     return fs
