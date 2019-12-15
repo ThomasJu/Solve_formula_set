@@ -17,3 +17,8 @@ git_heroku:
 	git commit 
 	git push heroku master
 .PHONY: test
+
+# Create an virtual environment
+# python3 -m venv env
+# source env/bin/active
+# deactivate
