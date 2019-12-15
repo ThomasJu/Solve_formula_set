@@ -3,6 +3,7 @@
 ## Usage
 ### Installation
   ```console
+  # make sure python3 and pip3 are both installed locally
   pip3 install -r requirements.txt
   python3 formula_set.py
   ```
@@ -26,3 +27,5 @@ command line usage
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resetv (reset all variables)<br /> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delf (delete formulas) // waiting for implementation<br /> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delv (delete values) // waiting for implementation<br /> 
+   -   help<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find the instruction of this command line
