@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # update is_solvable
 # upgrade TODO
-# update README
 # make see all formulas
 # make contradict---
 from sympy.solvers import solve
