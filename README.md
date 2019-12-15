@@ -8,7 +8,6 @@
   python3 formula_set.py
   ```
 ### Command line usage
-command line usage
    -   quit() <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leave the command line prompt
    -   init [name]       
