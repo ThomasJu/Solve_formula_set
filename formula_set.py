@@ -7,10 +7,9 @@ import readline
 SYMBOL = {"+", "-", "*", "\\", "=", "**", "^", "(", ")"}
 
 class Formula_set:
-    variable = dict()   # key value pair variable: value(default None)
-    formula = []     # a list of class Formula
-    
     def __init__(self, *formulas: str):
+        self.variable = dict()   # key value pair variable: value(default None)
+        self.formula = []     # a list of class Formula
         for f in formulas:
             self.add_formula(f)
         
