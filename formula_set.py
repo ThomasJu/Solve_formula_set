@@ -36,6 +36,7 @@ class Formula_set:
         for f in self.formula:
             try:
                 f.arg_required.remove(var)
+                f.unknown_var(var)
                 f.modify_content = f.modify_content.replace(var, str(self.variable[var]))
             except KeyError:
                 pass
@@ -55,11 +56,15 @@ class Formula_set:
         for var in variables:
             self.variable[var[0]] = var[1]
             self.update_variable(var[0])
+            for f in self.formula:
+                f.unknown_var.remove(var[0])
         if need_solve:
             self.solve()
     #  3  clear all values in variable
     def clear_variable(self):
         self.variable = self.variable.fromkeys(self.variable, None)
+        for f in self.formula:
+            f.unknown_var = f.arg_required
     #  4  clear all formulas in formulas
     def clear_formulas(self):
         self.formula = list()
@@ -78,20 +83,25 @@ class Formula_set:
     def delv(self, delvar: list):
         for var in delvar:
             del self.variable[var]
+            for f in self.formula:
+                if var in f.arg_required:
+                    f.unknown_var.add(var)
 
 # a class with content(formula), arg_required
 class Formula:
-    content = ""
-    modify_content = ""
-    arg_required = set()    # the variable remain for this formula
-    
     def __init__(self, content):
+        self.content = ""
+        self.modify_content = ""
+        self.arg_required = set()    # the variable remain for this formula
+        self.unknown_var = set()
+        
         self.content = content 
         self.arg_required =  set()
         for element in content.split():
             if element not in SYMBOL and not is_double(element):
                 self.arg_required.add(element)
         self.modify_content = self.content.replace('=', '- (') + ' )'
+        self.unknown_var = self.arg_required
 
 # command line usage
 #   0   quit()         leave the command line prompt
